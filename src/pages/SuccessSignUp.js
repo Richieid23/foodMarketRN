@@ -8,14 +8,17 @@ const SuccessSignUp = ({navigation}) => {
     //   <Text>Hello</Text>
     <View style={styles.page}>
       <IlSuccessSignUp />
-      <Gap height={30}/>
+      <Gap height={30} />
       <Text style={styles.title}>Yeay! Completed</Text>
-      <Gap height={6}/>
+      <Gap height={6} />
       <Text style={styles.subtitle}>Now you are able to order</Text>
       <Text style={styles.subtitle}>some foods as a self-reward</Text>
-      <Gap height={30}/>
+      <Gap height={30} />
       <View style={styles.buttonContainer}>
-        <Button text={'Find foods'} onPress={() => navigation.replace('MainApp')}/>
+        <Button
+          text={'Find foods'}
+          onPress={() => navigation.replace('MainApp')}
+        />
       </View>
     </View>
   );
