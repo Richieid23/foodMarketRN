@@ -1,34 +1,34 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Header, TextInput, Button, Gap} from '../components';
-import { storeData, useForm } from '../utills';
+import {storeData, useForm} from '../utills';
 
 const SignIn = ({navigation}) => {
   const [form, setForm] = useForm({
     email: '',
-    password: ''
+    password: '',
   });
 
   const onSubmit = async () => {
-    try {
-      const response = await fetch('http://192.168.43.59:5000/api/auth/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(form),
-      });
+    // try {
+    //   const response = await fetch('http://192.168.43.59:5000/api/auth/login', {
+    //     method: 'POST',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: JSON.stringify(form),
+    //   });
 
-      const parseRes = await response.json();
+    //   const parseRes = await response.json();
 
-      if(parseRes.status === 'success')  {
-        storeData('user', parseRes.data);
-        storeData('token', {value: parseRes.token});
-        navigation.replace('MainApp');
-      } else {
-        alert('Email atau password salah')
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
+    //   if(parseRes.status === 'success')  {
+    //     storeData('user', parseRes.data);
+    //     storeData('token', {value: parseRes.token});
+    navigation.replace('MainApp');
+    //   } else {
+    //     alert('Email atau password salah')
+    //   }
+    // } catch (err) {
+    //   console.error(err.message);
+    // }
   };
 
   return (
