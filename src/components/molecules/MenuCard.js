@@ -1,25 +1,26 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {MenuPic} from '../../assets';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import Rating from './Rating';
 
-const MenuCard = ({onPress, title, price}) => {
+const FoodCard = ({image, name, rating, onPress}) => {
   return (
     <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
       <View style={styles.container}>
-        <Image source={MenuPic} style={styles.image} />
-        <View style={{padding: 12}}>
-          <Text style={styles.title}>{title}</Text>
-          <Text>Rp. {price}</Text>
+        <Image source={image} style={styles.image} />
+        <View style={styles.content}>
+          <Text style={styles.text}>{name}</Text>
+          <Rating number={rating} />
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default MenuCard;
+export default FoodCard;
 
 const styles = StyleSheet.create({
   container: {
+    width: 200,
     backgroundColor: 'white',
     borderRadius: 8,
     shadowColor: 'black',
@@ -27,10 +28,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 10,
     elevation: 14,
-    width: 300,
     overflow: 'hidden',
-    marginVertical: 10,
+    marginRight: 24,
   },
-  image: {width: 300, height: 200, resizeMode: 'cover'},
-  title: {fontSize: 20, fontFamily: 'Poppins-Regular', color: '#020202'},
+  image: {width: 200, height: 140, resizeMode: 'cover'},
+  content: {padding: 12},
+  text: {fontSize: 16, fontFamily: 'Poppins-Regular', color: '#020202'},
 });
