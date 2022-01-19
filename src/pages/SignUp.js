@@ -2,35 +2,35 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, Gap, Header, TextInput} from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { storeData, useForm } from '../utills';
+import {storeData, useForm} from '../utills';
 
 const SignUp = ({navigation}) => {
   const [form, setForm] = useForm({
     username: '',
     email: '',
-    password: ''
+    password: '',
   });
 
   const onSubmit = async () => {
-    try {
-      const response = await fetch('http://192.168.43.59:5000/api/auth/register', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(form),
-      });
+    // try {
+    //   const response = await fetch('http://192.168.43.59:5000/api/auth/register', {
+    //     method: 'POST',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: JSON.stringify(form),
+    //   });
 
-      const parseRes = await response.json();
-      
-      if (parseRes.status === 'success') {
-        storeData('user', parseRes.data);
-        storeData('token', {value: parseRes.token});
-        navigation.replace('SuccessSignUp');
-      } else {
-        alert('Sign Up gagal')
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
+    //   const parseRes = await response.json();
+
+    //   if (parseRes.status === 'success') {
+    //     storeData('user', parseRes.data);
+    //     storeData('token', {value: parseRes.token});
+    navigation.replace('SuccessSignUp');
+    //   } else {
+    //     alert('Sign Up gagal')
+    //   }
+    // } catch (err) {
+    //   console.error(err.message);
+    // }
   };
 
   return (
@@ -59,7 +59,7 @@ const SignUp = ({navigation}) => {
           label={'Password'}
           placeholder={'Type your password'}
           value={form.password}
-          onChangeText={(value) => setForm('password',value)}
+          onChangeText={(value) => setForm('password', value)}
           secureTextEntry
         />
         <Gap height={24} />
