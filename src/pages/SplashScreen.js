@@ -2,18 +2,18 @@ import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Logo} from '../assets';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getData } from '../utills';
+import {getData} from '../utills';
 
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      getData('token').then((res) => {
-        if (res) {
-          navigation.replace('MainApp');
-        } else {
-          navigation.replace('SignIn');
-        }
-      });
+      // getData('token').then((res) => {
+      //   if (res) {
+      //     navigation.replace('MainApp');
+      //   } else {
+      navigation.replace('SignIn');
+      //   }
+      // });
     }, 5000);
   }, []);
 
