@@ -1,24 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {MenuPic} from '../assets';
 import {Gap, Header, HomeTabSection, MenuCard} from '../components';
+import {getMenuData} from '../redux/action';
 
 const Home = ({navigation}) => {
-  // const layout = useWindowDimensions();
+  const dispatch = useDispatch();
+  const {menus} = useSelector((state) => state.homeReducer);
 
-  // const getMenus = async() => {
-  //     try {
-  //         const response = await fetch("http://192.168.43.59:5000/api/menu");
-  //         const jsonData = await response.json();
-  //         setMenus(jsonData.data.menus);
-  //     } catch (err) {
-  //         console.error(err.message);
-  //     }
-  // }
-
-  // useEffect(() => {
-  //     getMenus();
-  // }, []);
+  useEffect(() => {
+    dispatch(getMenuData());
+  }, []);
 
   return (
     <View style={styles.page}>
@@ -27,12 +20,17 @@ const Home = ({navigation}) => {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.foodCardContainer}>
             <Gap width={24} />
-            <MenuCard
-              name={'Nama Menu'}
-              image={MenuPic}
-              rating={4.0}
-              onPress={() => navigation.navigate('MenuDetail')}
-            />
+            {menus.map((menu) => {
+              return (
+                <MenuCard
+                  key={menu.id}
+                  name={menu.name}
+                  image={menu.picture ? menu.picture : MenuPic}
+                  rating={menu.rate}
+                  onPress={() => navigation.navigate('MenuDetail', menu)}
+                />
+              );
+            })}
           </View>
         </ScrollView>
       </View>

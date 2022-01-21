@@ -1,6 +1,10 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
+import {useDispatch} from 'react-redux';
 import {Header, TextInput, Button, Gap} from '../components';
+import {API_HOST} from '../config';
+import {setLoading} from '../redux/action';
 import {storeData, useForm} from '../utills';
 
 const SignIn = ({navigation}) => {
@@ -9,26 +13,40 @@ const SignIn = ({navigation}) => {
     password: '',
   });
 
+  const dispatch = useDispatch();
+
   const onSubmit = async () => {
-    // try {
-    //   const response = await fetch('http://192.168.43.59:5000/api/auth/login', {
-    //     method: 'POST',
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify(form),
-    //   });
+    dispatch(setLoading(true));
+    try {
+      const response = await fetch(`${API_HOST.url}/auth/login`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(form),
+      });
 
-    //   const parseRes = await response.json();
+      const parseRes = await response.json();
 
-    //   if(parseRes.status === 'success')  {
-    //     storeData('user', parseRes.data);
-    //     storeData('token', {value: parseRes.token});
-    navigation.replace('MainApp');
-    //   } else {
-    //     alert('Email atau password salah')
-    //   }
-    // } catch (err) {
-    //   console.error(err.message);
-    // }
+      if (parseRes.status === 'success') {
+        storeData('user', parseRes.data);
+        storeData('token', {value: parseRes.token});
+        dispatch(setLoading(false));
+        navigation.reset({index: 0, routes: [{name: 'MainApp'}]});
+      } else {
+        dispatch(setLoading(false));
+        showToast(parseRes);
+      }
+    } catch (err) {
+      dispatch(setLoading(false));
+      showToast(err.message);
+    }
+  };
+
+  const showToast = (message, type) => {
+    showMessage({
+      message,
+      type: type === 'success' ? 'success' : 'danger',
+      backgroundColor: type === 'success' ? '#1abc9c' : '#d9435e',
+    });
   };
 
   return (

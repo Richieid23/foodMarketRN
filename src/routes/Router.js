@@ -9,6 +9,8 @@ import {
   Order,
   MenuDetail,
   SuccessOrder,
+  OrderSummary,
+  OrderDetail,
 } from '../pages';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator} from '../components';
@@ -63,8 +65,18 @@ const Router = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="OrderSummary"
+        component={OrderSummary}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="SuccessOrder"
         component={SuccessOrder}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OrderDetail"
+        component={OrderDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

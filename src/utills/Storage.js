@@ -1,19 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {showMessage} from 'react-native-flash-message';
 
 export const storeData = async (storageKey, value) => {
   try {
-    const jsonValue = JSON.stringify(value)
-    await AsyncStorage.setItem(storageKey, jsonValue)
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(storageKey, jsonValue);
   } catch (e) {
-    alert('Gagal menyimpan di local storage');
+    showMessage({
+      message: 'Gagal menyimpan data di local storage',
+      type: 'danger',
+      backgroundColor: '#d9435e',
+    });
   }
-}
+};
 
 export const getData = async (storageKey) => {
   try {
-    const jsonValue = await AsyncStorage.getItem(storageKey)
+    const jsonValue = await AsyncStorage.getItem(storageKey);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch(e) {
-    alert('Gagal menyimpan di local storage');
+  } catch (e) {
+    showMessage({
+      message: 'Gagal mengambil data di local storage',
+      type: 'danger',
+      backgroundColor: '#d9435e',
+    });
   }
-}
+};

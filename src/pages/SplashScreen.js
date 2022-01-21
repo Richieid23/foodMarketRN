@@ -1,20 +1,39 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {Logo} from '../assets';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API_HOST} from '../config';
 import {getData} from '../utills';
 
 const SplashScreen = ({navigation}) => {
+  const isAuth = async (token) => {
+    try {
+      const response = await fetch(`${API_HOST.url}/auth/is-verify`, {
+        method: 'GET',
+        headers: {token: token.value},
+      });
+
+      const parseRes = await response.json();
+
+      parseRes === true
+        ? navigation.reset({index: 0, routes: [{name: 'MainApp'}]})
+        : navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => {
-      // getData('token').then((res) => {
-      //   if (res) {
-      //     navigation.replace('MainApp');
-      //   } else {
-      navigation.replace('SignIn');
-      //   }
-      // });
-    }, 5000);
+      getData('token').then((res) => {
+        if (res) {
+          isAuth(res);
+        } else {
+          navigation.reset({index: 0, routes: [{name: 'SignIn'}]});
+        }
+      });
+    }, 3000);
   }, []);
 
   return (

@@ -19,6 +19,15 @@ const SuccessOrder = ({navigation}) => {
           onPress={() => navigation.replace('MainApp')}
         />
       </View>
+      {/* <Gap height={12} /> */}
+      {/* <View style={styles.buttonContainer}>
+        <Button
+          text={'View My Order'}
+          color="#8d92a3"
+          textColor="white"
+          onPress={() => navigation.replace('MainApp', {Screen: 'Order'})}
+        />
+      </View> */}
     </View>
   );
 };
@@ -30,6 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 20,

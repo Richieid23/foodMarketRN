@@ -11,15 +11,15 @@ import {Button, Counter, Number, Rating} from '../components';
 import {getData} from '../utills';
 
 const MenuDetail = ({navigation, route}) => {
-  // const {id, name, description, price} = route.params;
-  // const [user, setUser] = useState({});
+  const {id, name, description, ingredients, price, rate} = route.params;
+  const [user, setUser] = useState({});
   const [totalItem, setTotalItem] = useState(1);
 
-  // useEffect(() => {
-  //   getData('user').then((res) => {
-  //     setUser(res.user);
-  //   });
-  // },[]);
+  useEffect(() => {
+    getData('user').then((res) => {
+      setUser(res.user);
+    });
+  }, []);
 
   // const onSubmit = async () => {
   //   try {
@@ -47,22 +47,28 @@ const MenuDetail = ({navigation, route}) => {
   };
 
   const onOrder = () => {
-    const totalPrice = totalItem * 12000;
+    const totalPrice = totalItem * price;
     const driver = 50000;
     const tax = (10 / 100) * totalPrice;
     const total = totalPrice + driver + tax;
 
     const data = {
-      transaction: {
+      item: {
+        id,
+        name,
+        price,
+      },
+      order: {
         totalItem,
         totalPrice,
         driver,
         tax,
         total,
       },
+      user,
     };
 
-    navigation.navigate('OrderSummary');
+    navigation.navigate('OrderSummary', data);
   };
 
   return (
@@ -78,19 +84,19 @@ const MenuDetail = ({navigation, route}) => {
         <View style={styles.mainContent}>
           <View style={styles.productContainer}>
             <View>
-              <Text style={styles.title}>Nama Menu</Text>
-              <Rating number={4} />
+              <Text style={styles.title}>{name}</Text>
+              <Rating number={rate} />
             </View>
             <Counter onValueChange={onCounterChange} />
           </View>
-          <Text style={styles.desc}>Deskripsi</Text>
+          <Text style={styles.desc}>{description}</Text>
           <Text style={styles.label}>Ingredients:</Text>
-          <Text style={styles.desc}>Bahan-Bahan</Text>
+          <Text style={styles.desc}>{ingredients}</Text>
         </View>
         <View style={styles.footer}>
           <View style={styles.priceContainer}>
             <Text style={styles.labelTotal}>Total Price:</Text>
-            {/* <Number number={totalItem * 1200} style={styles.priceTotal} /> */}
+            <Number number={totalItem * price} style={styles.priceTotal} />
           </View>
           <View style={styles.button}>
             <Button text="Order Now" onPress={onOrder} />

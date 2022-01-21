@@ -5,7 +5,6 @@ import {Button, Gap} from '../components';
 
 const SuccessSignUp = ({navigation}) => {
   return (
-    //   <Text>Hello</Text>
     <View style={styles.page}>
       <IlSuccessSignUp />
       <Gap height={30} />
@@ -17,7 +16,9 @@ const SuccessSignUp = ({navigation}) => {
       <View style={styles.buttonContainer}>
         <Button
           text={'Find foods'}
-          onPress={() => navigation.replace('MainApp')}
+          onPress={() =>
+            navigation.reset({index: 0, routes: [{name: 'MainApp'}]})
+          }
         />
       </View>
     </View>
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 20,

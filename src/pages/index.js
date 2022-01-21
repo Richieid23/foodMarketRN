@@ -6,6 +6,8 @@ import Home from './Home';
 import Order from './Order';
 import MenuDetail from './MenuDetail';
 import SuccessOrder from './SuccessOrder';
+import OrderSummary from './OrderSummary';
+import OrderDetail from './OrderDetail';
 
 export {
   SplashScreen,
@@ -16,4 +18,6 @@ export {
   Home,
   MenuDetail,
   SuccessOrder,
+  OrderSummary,
+  OrderDetail,
 };
